@@ -11,9 +11,22 @@ Ansible Cassandra Cluster
 |cassandra02  |  192.168.1.2   |
 |cassandra03  |  192.168.1.190 |
 
-### Setup Multi Node
+## Setup Multi Node
 ```
 ansible -m ping cassandra -o
 ansible -m shell -a "sudo reboot" cassandra -v -o
 ansible-playbook main.yml
 ```
+## Testing & Verification
+When ansible completes, login to one of the nodes and type ```nodetool status```. You should see this:
+```
+Datacenter: DEVDC1
+==================
+Status=Up/Down
+|/ State=Normal/Leaving/Joining/Moving
+--  Address        Load        Tokens  Owns (effective)  Host ID                               Rack       
+UN  192.168.1.239  215.62 KiB  256     ?                 f0aa8dfb-5c10-4bd6-91b5-9c11ce658237  DEVLABRACK1
+UN  192.168.1.237  191.15 KiB  256     ?                 99d137fc-8807-440f-9956-6813c58bc4a9  DEVLABRACK1
+UN  192.168.1.240  215.6 KiB   256     ?                 145cba34-2621-488b-bff3-3df127ce3326  DEVLABRACK1
+```
+***NOTE: Update Data Center and Rack Settings as needed***

@@ -5,3 +5,5 @@ epel_repofile_path: "/etc/yum.repos.d/epel.repo"
 
 cluster_name: "DevLabs Cluster"
 cassandra_cluster: "cassandra01, cassandra02, cassandra03"
+data_center: "LABSDC"
+data_rack: "LABSDC-RACK-01"

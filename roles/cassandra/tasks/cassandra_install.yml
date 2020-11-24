@@ -78,8 +78,8 @@
     - 'net.ipv6.conf.lo.disable_ipv6 = 1'
 
 - name: RackDC | Update RACK DC
-  copy:
-    src: "cassandra-rackdc.properties"
+  template:
+    src: "cassandra-rackdc.properties.j2"
     dest: "/etc/cassandra/conf/cassandra-rackdc.properties"
 
 - name: Update | Update Cluster Name in /etc/cassandra/default.conf/cassandra.yaml
@@ -99,6 +99,13 @@
     path: "/etc/cassandra/default.conf/cassandra.yaml"
     regexp: "^rpc_address"
     line: "rpc_address: {{ inventory_hostname }}"
+
+- name: Update | Update endpoint_snitch in /etc/cassandra/default.conf/cassandra.yaml
+  lineinfile:
+    path: "/etc/cassandra/default.conf/cassandra.yaml"
+    regexp: "^endpoint_snitch"
+    line: "endpoint_snitch: GossipingPropertyFileSnitch"
+
 
 - name: Update | Update - seeds in /etc/cassandra/default.conf/cassandra.yaml
   lineinfile:
