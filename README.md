@@ -7,9 +7,9 @@ Ansible Cassandra Cluster
 ## Cassandra Cluster
 |Server Name  |  Ip Address    |
 |-------------|----------------|
-|cassandra01  |  192.168.1.12  |
-|cassandra02  |  192.168.1.2   |
-|cassandra03  |  192.168.1.190 |
+|cassandra01  |  192.168.1.239 |
+|cassandra02  |  192.168.1.237 |
+|cassandra03  |  192.168.1.240 |
 
 ## Setup Multi Node
 ```
