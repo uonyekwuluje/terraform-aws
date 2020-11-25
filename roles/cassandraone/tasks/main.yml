@@ -1,0 +1,20 @@
+---
+- name: Repository | Update Cassandra Repository
+  copy:
+    src: "cassandra.repo"
+    dest: "/etc/yum.repos.d/cassandra.repo"
+  register: cassandra_repo
+
+- name: Install | Install Cassandra
+  yum:
+     name: "cassandra"
+     state: present
+  when:
+  - ansible_os_family == 'RedHat'
+
+- name: Service | Enable Cassandra service
+  systemd:
+     name: cassandra
+     enabled: yes
+     state: restarted
+     daemon_reload: yes
