@@ -1,3 +1,7 @@
+data "template_file" "user_data" {
+  template = file("init-scripts/user-data.tpl")
+}
+
 resource "aws_instance" "linux_instance" {
   count                  = var.node_count
   ami                    = var.aws_ami
@@ -11,6 +15,8 @@ resource "aws_instance" "linux_instance" {
     volume_size  =  var.root_disk_size
     delete_on_termination  = true
   }
+
+  user_data_base64  = base64encode(data.template_file.user_data.rendered)
 
   tags = {
     Environment = var.environment

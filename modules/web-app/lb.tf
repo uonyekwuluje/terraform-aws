@@ -72,14 +72,9 @@ resource "aws_lb_listener" "app-lb-listner" {
 }
 
 
-resource "aws_lb_target_group_attachment" "app-lb-target-group-attachment1" {
+resource "aws_lb_target_group_attachment" "app-lb-target-group-attachment" {
+  count            = var.node_count
   target_group_arn = aws_lb_target_group.webapp-target-group.arn
-  target_id        = "i-08c8e28ebdf315f47"
-  port             = 80
-}
-
-resource "aws_lb_target_group_attachment" "app-lb-target-group-attachment2" {
-  target_group_arn = aws_lb_target_group.webapp-target-group.arn
-  target_id        = "i-023a6805a7577df39"
+  target_id        = element(aws_instance.linux_instance.*.id, count.index)
   port             = 80
 }

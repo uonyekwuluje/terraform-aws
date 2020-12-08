@@ -144,30 +144,31 @@ output "elasticstack_security_group_id" {
 ## --------------------------------------------------------------------------------------
 
 
-## =============================== Web Application =================================
-##                2 EC2 instances Behind a Application Load Balancer
-## =================================================================================
-#module "web_app_elb" {
-#  source = "./modules/web-app"
-#  server_name = "webappsrv"
-#  node_count  =  2
-#  project_suffix = var.project_suffix
-#  private_subnet_1_id = module.infra_network.private_subnet_one_id
-#  private_subnet_2_id = module.infra_network.private_subnet_two_id
-#  public_subnet_1_id = module.infra_network.public_subnet_one_id
-#  public_subnet_2_id = module.infra_network.public_subnet_two_id
-#  aws_ami = var.aws_centos7_base_ami
-#  aws_type = var.allpurpose_vm_size["vm_1_by_2"]
-#  security_group = module.security_groups.vm_base_sg
-#  environment = var.environment
-#  root_disk_size = var.disk_size
-#  vpc_id = module.infra_network.vpc_id
-#}
-#
-#output "webapp_private_address" {
-#  value = module.web_app_elb.PRIVLinux_private_address
-#}
-## =====================================================================================
+# =============================== Web Application =================================
+# Create AWS Application Load Balancer with EC2 instances Behind. Install Apache
+# With Custom Config script and template
+# =================================================================================
+module "web_app_elb" {
+  source = "./modules/web-app"
+  server_name = "rbappsrv"
+  node_count  = 0
+  project_suffix = var.project_suffix
+  private_subnet_1_id = module.infra_network.private_subnet_one_id
+  private_subnet_2_id = module.infra_network.private_subnet_two_id
+  public_subnet_1_id = module.infra_network.public_subnet_one_id
+  public_subnet_2_id = module.infra_network.public_subnet_two_id
+  aws_ami = var.aws_centos7_base_ami
+  aws_type = var.allpurpose_vm_size["vm_1_by_2"]
+  security_group = module.security_groups.vm_base_sg
+  environment = var.environment
+  root_disk_size = var.disk_size
+  vpc_id = module.infra_network.vpc_id
+}
+
+output "webapp_private_address" {
+  value = module.web_app_elb.PRIVLinux_private_address
+}
+# =====================================================================================
 
 
 # ============================= Kubernetes Cluster =====================================
